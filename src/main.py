@@ -7,7 +7,7 @@ from .preprocess import set_seed, get_datasets, prepare_tensors, STRIPEEncoder, 
 from .train import SRCReservoir, LinearRidgeReadout, STRIPE_SRC_Model, make_encoder_for_ablation, collect_features_encoder_reservoir
 from .evaluate import run_clean_accuracy_latency, plot_accuracy_bar, plot_latency_bar, plot_confusion_matrix, evaluate_robustness, plot_robustness_curves, jacobian_spectral_radius, plot_sr_vs_margin
 
-IMAGE_DIR = os.path.join('.research', 'iteration1', 'images')
+IMAGE_DIR = os.path.join('.research', 'iteration2', 'images')
 os.makedirs(IMAGE_DIR, exist_ok=True)
 MODEL_DIR = 'models'
 os.makedirs(MODEL_DIR, exist_ok=True)
@@ -122,7 +122,7 @@ def quick_test(seed: int = 0):
         if abl == 'none':
             plot_sr_vs_margin(sr_vals, margins, title='SR vs Margin (MNIST quick, STRIPE)', filename='sr_vs_margin')
 
-    print("\nQuick test finished. Saved figures to .research/iteration1/images:")
+    print("\nQuick test finished. Saved figures to .research/iteration2/images:")
     print(" - accuracy_stripe_vs_baselines.pdf")
     print(" - inference_latency.pdf")
     print(" - confusion_matrix_stripe.pdf")

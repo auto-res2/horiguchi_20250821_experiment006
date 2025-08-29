@@ -31,12 +31,10 @@ class FastfoodOp(nn.Module):
         h = 1
         y = x
         while h < N:
-            y = y.view(B, -1, 2 * h)
-            a = y[:, :, :h]
-            b = y[:, :, h:2 * h]
-            y[:, :, :h] = a + b
-            y[:, :, h:2 * h] = a - b
-            y = y.view(B, -1)
+            y_reshaped = y.view(B, -1, 2 * h)
+            a = y_reshaped[:, :, :h]
+            b = y_reshaped[:, :, h:2 * h]
+            y = torch.cat([a + b, a - b], dim=2).view(B, -1)
             h *= 2
         return y
 
@@ -93,10 +91,12 @@ class SRCReservoir(nn.Module):
     def step(self, u_t: torch.Tensor):
         # u_t: (B, D)
         drive = self.W_in(u_t)
-        self.r_u = 0.99 * self.r_u + 0.01 * (drive.pow(2).mean(dim=1).sqrt() + 1e-6)
+        with torch.no_grad():
+            self.r_u = 0.99 * self.r_u + 0.01 * (drive.pow(2).mean(dim=1).sqrt() + 1e-6)
         pre = self.W(self.x) + drive
         x_nl = torch.tanh(pre)
-        self.r_x = 0.99 * self.r_x + 0.01 * (x_nl.pow(2).mean(dim=1).sqrt() + 1e-6)
+        with torch.no_grad():
+            self.r_x = 0.99 * self.r_x + 0.01 * (x_nl.pow(2).mean(dim=1).sqrt() + 1e-6)
         ratio = self.r_x / (self.r_u + 1e-6)
         alpha = self.alpha0 * (self.r_target / (ratio + 1e-6))
         alpha = alpha.clamp(self.amin, self.amax).unsqueeze(1)
@@ -174,7 +174,7 @@ class STRIPE_SRC_Model(nn.Module):
         assert len(seqs) == 1
         z, _ = self.src.forward_sequence(seqs[0], T_tail=self.T_tail, pool='avg')
         logits = self.readout(z)
-        return logits
+        return logits.unsqueeze(0)
 
 
 @dataclass
