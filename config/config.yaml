@@ -1,0 +1,3 @@
+# Default configuration for STRIPE-SRC experiments
+quick: true
+seed: 0
