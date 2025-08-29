@@ -14,7 +14,7 @@ from .train import LinearRidgeReadout, SRCReservoir
 from .preprocess import add_gaussian_noise, translate_zeropad, to_onehot
 from .train import collect_features_encoder_reservoir
 
-IMAGE_DIR = os.path.join('.research', 'iteration4', 'images')
+IMAGE_DIR = os.path.join('.research', 'iteration5', 'images')
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
 # Improve PDF quality
