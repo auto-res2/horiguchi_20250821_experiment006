@@ -14,7 +14,7 @@ from .train import LinearRidgeReadout, SRCReservoir
 from .preprocess import add_gaussian_noise, translate_zeropad, to_onehot
 from .train import collect_features_encoder_reservoir
 
-IMAGE_DIR = os.path.join('.research', 'iteration3', 'images')
+IMAGE_DIR = os.path.join('.research', 'iteration4', 'images')
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
 # Improve PDF quality
@@ -61,7 +61,8 @@ def run_clean_accuracy_latency(dataset_name: str,
 def fgsm_attack(model: torch.nn.Module, img: torch.Tensor, label: int, eps: float = 0.15) -> torch.Tensor:
     x = img.clone().detach().requires_grad_(True)
     logits = model(x)
-    loss = F.cross_entropy(logits, torch.tensor([label]))
+    target = torch.tensor([label], dtype=torch.long, device=logits.device)
+    loss = F.cross_entropy(logits, target)
     loss.backward()
     x_adv = (x + eps * x.grad.sign()).clamp(0, 1).detach()
     return x_adv
