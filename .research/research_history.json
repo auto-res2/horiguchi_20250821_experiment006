@@ -6,5 +6,82 @@
     "echo state network images",
     "reservoir dynamics accuracy",
     "liquid state machine MNIST"
+  ],
+  "research_study_list": [
+    {
+      "title": "Reservoir Computing meets Recurrent Kernels and Structured Transforms"
+    },
+    {
+      "title": "Reservoir Computing meets Recurrent Kernels and Structured Transforms"
+    },
+    {
+      "title": "Increasing Liquid State Machine Performance with Edge-of-Chaos Dynamics Organized by Astrocyte-modulated Plasticity"
+    },
+    {
+      "title": "Recurrent Quantum Neural Networks"
+    },
+    {
+      "title": "Unfolding recurrence by Green’s functions for optimized reservoir computing"
+    },
+    {
+      "title": "DeepSITH: Efficient Learning via Decomposition of What and When Across Time Scales"
+    },
+    {
+      "title": "Learning low-dimensional generalizable natural features from retina using a U-net"
+    },
+    {
+      "title": "Learning to Detect Objects with a 1 Megapixel Event Camera"
+    },
+    {
+      "title": "Hierarchical Neural Memory Network for Low Latency Event Processing"
+    },
+    {
+      "title": "A deep convolutional neural network that is invariant to time rescaling"
+    },
+    {
+      "title": "Images as Weight Matrices: Sequential Image Generation Through Synaptic Learning Rules"
+    },
+    {
+      "title": "Sparse Spiking Neural Network: Exploiting Heterogeneity in Timescales for Pruning Recurrent SNN"
+    },
+    {
+      "title": "Holomorphic Equilibrium Propagation Computes Exact Gradients Through Finite Size Oscillations"
+    },
+    {
+      "title": "Meta-Learning Deep Energy-Based Memory Models"
+    },
+    {
+      "title": "Neural Delay Differential Equations"
+    },
+    {
+      "title": "Unfolding recurrence by Green’s functions for optimized reservoir computing"
+    },
+    {
+      "title": "Reservoir Computing meets Recurrent Kernels and Structured Transforms"
+    },
+    {
+      "title": "Reservoir Computing meets Recurrent Kernels and Structured Transforms"
+    },
+    {
+      "title": "Time Series Kernels based on Nonlinear Vector AutoRegressive Delay Embeddings"
+    },
+    {
+      "title": "Learning Controllable Adaptive Simulation for Multi-resolution Physics"
+    },
+    {
+      "title": "Increasing Liquid State Machine Performance with Edge-of-Chaos Dynamics Organized by Astrocyte-modulated Plasticity"
+    },
+    {
+      "title": "Training Linear Finite-State Machines"
+    },
+    {
+      "title": "Recurrent Quantum Neural Networks"
+    },
+    {
+      "title": "Slot Machines: Discovering Winning Combinations of Random Weights in Neural Networks"
+    },
+    {
+      "title": "Liquid Structural State-Space Models"
+    }
   ]
 }
