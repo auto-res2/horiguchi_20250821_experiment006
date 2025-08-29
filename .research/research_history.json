@@ -549,6 +549,68 @@
       }
     }
   ],
+  "reference_research_study_list": [
+    {
+      "title": "On the difficulty of training recurrent neural networks"
+    },
+    {
+      "title": "Recent advances in recurrent neural networks"
+    },
+    {
+      "title": "The “echo state” approach to analysing and training recurrent neural networks-with an erratum note"
+    },
+    {
+      "title": "An experimental unification of reservoir computing methods"
+    },
+    {
+      "title": "Reservoir computing approaches to recurrent neural network training"
+    },
+    {
+      "title": "Model-free prediction of large spatiotemporally chaotic systems from data: A reservoir computing approach"
+    },
+    {
+      "title": "FPGA implementation of reservoir computing with online learning"
+    },
+    {
+      "title": "General-purpose LSM learning processor architecture and theoretically guided design space exploration"
+    },
+    {
+      "title": "A digital liquid state machine with biologically inspired learning and its application to speech recognition"
+    },
+    {
+      "title": "Performance and robustness of bio-inspired digital liquid state machines: A case study of speech recognition"
+    },
+    {
+      "title": "Photonic information processing beyond Turing: an optoelectronic implementation of reservoir computing"
+    },
+    {
+      "title": "All-optical reservoir computing"
+    },
+    {
+      "title": "Advances in photonic reservoir computing"
+    },
+    {
+      "title": "Scaling up echo-state networks with multiple light scattering"
+    },
+    {
+      "title": "Optical reservoir computing using multiple light scattering for chaotic systems prediction"
+    },
+    {
+      "title": "Recent advances in physical reservoir computing: A review"
+    },
+    {
+      "title": "Reservoir computing trends"
+    },
+    {
+      "title": "Reservoir computing with untrained convolutional neural networks for image recognition"
+    },
+    {
+      "title": "Reinforcement learning with convolutional reservoir computing"
+    },
+    {
+      "title": "Real-time parallel processing of grammatical structure in the fronto-striatal system: A recurrent network simulation study using reservoir computing"
+    }
+  ],
   "new_method": {
     "method": "Open Problems: Reservoir and liquid–type recurrent models excel on temporal tasks, yet they still lag far-behind convolutional networks on static image benchmarks.  The core difficulty is the lack of a principled *temporal encoding* that converts a 2-D image into a 1-D stimulus stream which: (i) preserves spatial relationships, (ii) lets the reservoir’s dynamics integrate local and global evidence, (iii) yields robustness to spatial corruptions (translation, noise, adversarial perturbations) and (iv) remains computationally light.  Current practices – simple raster scans or feeding all pixels at once – either destroy neighbourhood structure or collapse the time dimension, resulting in poor accuracy and brittle behaviour.  A generic, theory-backed encoding that makes reservoirs competitive for image recognition is still missing.\nMethods: We propose STRIPE (Spatial-Temporal Random Image Patch Encoding) – a drop-in front-end for any reservoir / recurrent-kernel model.\n1. Multi-scale patch sampler  • At each time-step t the encoder draws a K×K patch centred at a location r_t.  • r_t follows a deterministic low-discrepancy “space-filling gaze path” (quasi-Hilbert curve) so every pixel is visited once but nearby pixels appear in nearby timesteps, preserving locality.\n2. Scale-Invariant repetition  • The gaze path is replayed over logarithmically increasing patch sizes (K,2K,4K, ..) inspired by SITH/SITHCon, giving the sequence long-range, compressed summaries of coarse structure.\n3. Patch hashing  • Each patch is projected by a fixed random convolution (sign-random ±1 filters, stride K) to D dimensions; this constitutes the input vector u_t.  The operation is O(D K^2) and can be pre-computed in bit-wise form.\n4. Structured Reservoir  • Feed u_t into a Structured Echo-State Network (Hadamard SRC) or its recurrent-kernel limit for fast (O(N log N)) computation.  Multiple independent reservoirs with different spectral radii work as an ensemble.\n5. Edge-of-Chaos self-tuning  • A lightweight astrocyte-style global feedback monitors the ratio of reservoir activity to input activity and linearly scales the leak-rate so that dynamics stay near criticality, improving separability and robustness.\n6. Linear read-out  • A ridge-regression classifier is trained on the concatenated last-T reservoir states (or their kernel) – no back-propagation through time is required.\nNovelty versus prior work  • STRIPE supplies an encoding specifically crafted to match reservoir dynamics, unlike raster scans (used in old ESN MNIST demos) or Poisson encoding (spiking LSM).  • It brings SITH-like logarithmic time structure into a non-trainable encoder, keeping the reservoir completely random and analyzable via recurrent-kernel theory.  • The edge-of-chaos control adapts the *internal* dynamics only; no synapse plasticity or gradient is needed, differentiating it from NALSM.  • The whole pipeline is compatible with the existing RecKernel / ESN codebase – only the pre-processor and a single scalar feedback loop are added.\nExperimental Setup: Datasets  • MNIST, Fashion-MNIST, CIFAR-10-grayscale.  Optionally Omniglot for few-shot evaluation.\nBaselines  (all with comparable parameter counts)  1. Raster-scan ESN/SRC  2. Poisson-encoded LSM with STDP  3. SITHCon (static image version)  4. 3-layer CNN (LeNet-5) as an upper-bound.\nAblations  • (a) remove multi-scale replay; (b) random instead of space-filling path; (c) no astrocyte feedback.\nMetrics  • Top-1 accuracy; • Robustness: (i) Gaussian noise σ∈{0.1,0.3,0.5}, (ii) 5-pixel random translation, (iii) FGSM ε=0.15 adversarial attack on input stream; • Computational cost: MACs per sample and wall-clock latency on CPU.\nProtocol  • For each method run 10 random seeds; report mean±std.  • Reservoir sizes N∈{2k,4k,8k}.  • Hyper-parameters (spectral radius, leak-rate bounds, ridge λ) tuned on a 5-k validation split of MNIST and reused elsewhere to demonstrate generality.  • For the kernel variant, subsample 6k train points to respect O(n²) memory and test on full test set; SRC uses all data.\nAnalysis  • Margin of linear read-out vs. reservoir criticality.  • Eigenvalue spectrum drift before/after astrocyte scaling to verify edge-of-chaos.\nResult: We expect STRIPE-SRC to reach ≈98.2% MNIST, 91-92% Fashion-MNIST, and 75-78% CIFAR10-gray with N=8k – matching or surpassing LeNet-5 while using only a fixed random reservoir and linear read-out.  Under heavy noise (σ=0.5) accuracy drop <3 pp, compared with >10 pp for raster ESN and >6 pp for CNN, showing superior robustness.  FGSM attack success rate falls by 40% relative to CNN.  Computationally, STRIPE-SRC runs 2-3× faster than LeNet-5 on CPU and ~1.5× faster than raster ESN owing to O(N log N) projection.  Ablations confirm that multi-scale replay adds ~+4 pp accuracy and astrocyte control adds +2 pp and most of the robustness gains.\nConclusion: The proposed STRIPE encoder unlocks high-accuracy, noise-tolerant image recognition for reservoir computing without any trained convolutions or back-propagation through time.  By marrying principled spatio-temporal sampling, scale-invariant replay and efficient structured reservoirs, it demonstrates that static vision tasks can indeed exploit recurrent dynamics.  Academically, it provides a new test-bed to study the kernel limit of reservoirs on non-temporal data and the role of critical dynamics in classification margins.  Practically, the CPU-friendly O(N log N) pipeline is attractive for low-power edge devices where CNNs are expensive to train or deploy.  Future work can extend STRIPE to colour images (RGB stream multiplexing), higher resolutions (progressive foveated scans), or event-camera data, and explore theoretical bounds on classification error in the recurrent-kernel regime.",
     "experimental_design": {
